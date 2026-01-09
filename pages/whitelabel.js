@@ -26,7 +26,7 @@ import { test, expect } from '@playwright/test';
             this.btnsearch = page.getByRole('button', { name: 'Search' });
             //consultant
             this.tabconsultant = page.getByRole('button', { name: 'Consultants' });
-            this.addnewconsultant = page.getByRole('button', { name: 'Add New Consultant' });
+            this.addconsultant = page.getByRole('button', { name: 'Add New Consultant' });
 this.consultantFname = page.getByRole('textbox', { name: 'First Name *' });
 this.consulantLname = page.getByRole('textbox', { name: 'Last Name *' });
 this.consultantemail = page.getByRole('textbox', { name: 'Email *' });
