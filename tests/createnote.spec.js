@@ -18,9 +18,10 @@ test('Login Functionality', async ({ page }) => {
 
       const note = new Note(page);
       await note.createnote(1);
-
+await page.pause();
      await  note.uploadfiles('Fact Sheet *')
       await  note.uploadfiles('Term Sheet *')
+      await page.pause();
      await  page.getByRole('button', { name: 'Create Note' }).click();
 
 })

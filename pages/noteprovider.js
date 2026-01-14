@@ -12,6 +12,10 @@ const { faker } = require('@faker-js/faker');
   
 async createnoteprovider (Notetype)
 {
+
+
+
+  
 const FCity = faker.location.city()
   const Fstreet = faker.location.street()
   const FZipCode = faker.location.zipCode()
@@ -22,7 +26,7 @@ const FCity = faker.location.city()
 const Ffrstname = faker.person.firstName();
   const values = ['Adidas AG', 'Adobe', 'Alcoa Corp','ALL ORD', 'American Express Co,', 'HEIDELBERGCEMENT AG O.N.' ];
 
-await this.page.pause(1000)
+
 
   
   await this.page.getByRole('textbox', { name: 'Name *' }).fill(FCompaney);

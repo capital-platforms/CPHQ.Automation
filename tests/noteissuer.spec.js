@@ -11,9 +11,10 @@ test('Login Functionality', async ({ page }) => {
 
       const menus = new Menus(page);
       await menus.loginmenu( 'Structured Products', 'Note Issuers');
-
+await page.pause(2000);
       const comaneyname = faker.company.name();
      
+      await page.waitForLoadState('networkidle');
       await page.getByText('Create').click();
       await page.getByRole('textbox', { name: 'Name *' }).fill(comaneyname);
       await page.locator("button[type='submit']").click();

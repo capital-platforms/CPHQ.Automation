@@ -1,3 +1,5 @@
+import { Console } from 'console';
+
     // pages/LoginPage.js
     const { Page } =  require('@playwright/test');
 
@@ -12,7 +14,7 @@
  
     async loginmenu(mainmenu, submenu) {
   
-    
+
 const menuItem = this.page.getByRole('menuitem', { name: mainmenu });
 
 const tabIndex = await menuItem.getAttribute('tabindex');
@@ -21,7 +23,8 @@ if (tabIndex !== '0') {
   await this.page.getByRole('menuitem', { name: mainmenu }).click();
 }
 
-    if (mainmenu == 'Structured Products' && submenu == 'create note')
+
+    if (mainmenu == 'Structured Products' && submenu == 'Create Note')
     {
        await this.page.getByRole('button', { name: submenu }).click();
     }

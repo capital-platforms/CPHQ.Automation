@@ -26,13 +26,13 @@ import { test, expect } from '@playwright/test';
             this.btnsearch = page.getByRole('button', { name: 'Search' });
             //consultant
             this.tabconsultant = page.getByRole('button', { name: 'Consultants' });
-            this.addconsultant = page.getByRole('button', { name: 'Add New Consultant' });
-this.consultantFname = page.getByRole('textbox', { name: 'First Name *' });
-this.consulantLname = page.getByRole('textbox', { name: 'Last Name *' });
-this.consultantemail = page.getByRole('textbox', { name: 'Email *' });
-this.consultantPHNo = page.getByRole('textbox', { name: 'Phone Number *' });
-this.consultantMobNo = page.getByRole('textbox', { name: 'Mobile Number *' });
-this.consultantsavebtn = page.getByRole('button', { name: 'Save changes' });
+            this.addnewconsultant = page.getByRole('button', { name: 'Add New Consultant' });
+            this.consultantFname = page.getByRole('textbox', { name: 'First Name *' });
+            this.consulantLname = page.getByRole('textbox', { name: 'Last Name *' });
+            this.consultantemail = page.getByRole('textbox', { name: 'Email *' });
+            this.consultantPHNo = page.getByRole('textbox', { name: 'Phone Number *' });
+            this.consultantMobNo = page.getByRole('textbox', { name: 'Mobile Number *' });
+            this.consultantsavebtn = page.getByRole('button', { name: 'Save changes' });
 //OWNER OF BUSINESS
         this.tabOOB = page.getByRole('switch', { name: 'Owner Of Business' });
         this.AddnewOOB = page.getByRole('button', { name: 'Add New Business Owner' });
@@ -45,11 +45,15 @@ this.consultantsavebtn = page.getByRole('button', { name: 'Save changes' });
         //document 
              this.tabdocument = page.getByRole('button', { name: 'Documents' });
             this.btnUpload = page.getByRole('button', { name: 'Upload' });
+            //Expected Business
+            this.tabExpectedBusiness = page.getByRole('button', { name: 'Expected Business' });
+            this.addnewExpectedBusiness = page.getByRole('button', { name: 'Add New' });
+            this.createExpectedBusiness =page.getByRole('button', { name: 'Create' });
 
 
         }
       
-       Fakerdata() {
+        Fakerdata() {
             return {
                 middlename: faker.person.firstName(),
                 companyul :'www.test.com',
@@ -63,7 +67,7 @@ this.consultantsavebtn = page.getByRole('button', { name: 'Save changes' });
                 emailadd : faker.internet.email()
             };
         }
-          randomThreeLetters() {
+        randomThreeLetters() {
                 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 let result = "";
                 for (let i = 0; i < 3; i++) {
@@ -73,10 +77,10 @@ this.consultantsavebtn = page.getByRole('button', { name: 'Save changes' });
                 }
         async createnewwhitelabel()
         {
-
+            
             const user = this.Fakerdata();
             const code = this.randomThreeLetters();
-await this.page.pause(2000);
+            await this.page.pause(2000);
                 await this.createWL.click();
                 await this.country.click();
                  await this.page.locator('[role="option"]').first().click();
@@ -101,17 +105,6 @@ await this.page.pause(2000);
                 await this.page.getByRole('menuitem', { name: 'View Details' }).click();
                 await  this.page.getByRole('button', { name: 'Configuration' }).click();
  
-        
-        
-        
-         /* await this.page.getByRole('button', {name: /Landing/}).click();
-         await newPage.waitForLoadState('domcontentloaded');
-
-// Example checks
-await expect(newPage).toHaveURL(/Landing\.aspx/);
-await expect(newPage).toHaveTitle(/Landing/i);
-*/
-
 
 
 
@@ -142,20 +135,21 @@ await expect(newPage).toHaveTitle(/Landing/i);
         }
         async Consultants ()
         {
+            const user1 = this.Fakerdata();
             await  this.tabconsultant.click();
             await this.addnewconsultant.click();
             await this.page.getByRole('combobox', { name: 'Title *' }).click();
             await this.page.getByRole('option', { name: 'Prof.' }).click();
             await this.consultantFname.click();
-            await this.consultantFname.fill('test');
+            await this.consultantFname.fill(user1.Ffrstname);
             await this.consulantLname.click();
-            await this.consulantLname.fill('test');
+            await this.consulantLname.fill(user1.Lstname);
             await this.consultantemail.click();
-            await this.consultantemail.fill('test@gmail.com');
+            await this.consultantemail.fill(user1.emailadd);
             await this.page.getByRole('combobox', { name: 'Country' }).click();
             await this.page.getByRole('option', { name: 'Anguilla' }).click();
             
-            await this.consultantPHNo.fill('346363563465');
+            await this.consultantPHNo.fill(user1.MobNo);
             await this.consultantMobNo.fill('4636456464');
             const combobox = this.page.getByRole('combobox', { name: 'Subsidiary' })
 
@@ -182,78 +176,77 @@ if (isDisabled == false)
         }
         async ownerofbusiness ()
         {
-
-
-           await this.tabOOB.click();
-
-  await this.AddnewOOB.click();
-  await this.page.getByRole('combobox', { name: 'Title *' }).click();
-  await this.page.getByRole('option', { name: 'Prof.' }).click();
-  await this.OOBFname.fill('test');
-  await this.OOBLname.fill('test');
-
-  await this.page.getByRole('textbox', { name: 'Email *' }).fill('test@gmail.com');
-  await this.page.getByRole('combobox', { name: 'Country' }).click();
-  await this.page.getByLabel('Albania').getByText('Albania').click();
-  await this.page.OOBPHNo.fill('2342342343');
-  await this.page.OOBMobNo.fill('4234325645');
-  await this.page.getByRole('combobox', { name: 'Subsidiary' }).click();
- await this.page.locator('[role="option"]').first().click();
-  await this.OOBbtnSave.click();
+            const user2 = this.Fakerdata();
+            await this.tabOOB.click();
+            await this.AddnewOOB.click();
+            await this.page.getByRole('combobox', { name: 'Title *' }).click();
+            await this.page.getByRole('option', { name: 'Prof.' }).click();
+            await this.OOBFname.fill(user2.Ffrstname);
+            await this.OOBLname.fill(user2.Lstname);
+            await this.page.getByRole('textbox', { name: 'Email *' }).fill(user2.email);
+            await this.page.getByRole('combobox', { name: 'Country' }).click();
+            await this.page.getByLabel('Albania').getByText('Albania').click();
+            await this.page.OOBPHNo.fill('2342342343');
+            await this.page.OOBMobNo.fill('4234325645');
+            await this.page.getByRole('combobox', { name: 'Subsidiary' }).click();
+            await this.page.locator('[role="option"]').first().click();
+            await this.OOBbtnSave.click();
         }
 
         async subsidary ()
         {
-             await  this.page.getByRole('button', { name: 'Subsidiary' }).click();
-            await this.page.getByRole('button', { name: 'Add New Subsidiary' }).click();
-  await this.page.getByRole('textbox', { name: 'Branch Name *' }).click();
-  await this.page.getByRole('textbox', { name: 'Branch Name *' }).fill('test');
-  await this.page.getByRole('combobox', { name: 'Country *' }).click();
- 
-  await this.page.getByRole('option', { name: 'Afghanistan' }).click();
-  
-  await this.page.getByRole('textbox', { name: 'Email *' }).fill('test@gmail.com');
-  
-  await this.page.getByRole('textbox', { name: 'Telephone No. *' }).fill('45654645645');
- 
-  await this.page.getByRole('textbox', { name: 'Business Address *' }).fill('test');
-  await this.page.getByRole('combobox', { name: 'Business Development Manager *' }).click();
-  await this.page.getByLabel('Alex Robinson').getByText('Alex Robinson').click();
-  await this.page.getByRole('combobox', { name: 'Client Service Manager *' }).click();
-  await this.page.getByRole('option', { name: 'Admin SA' }).click();
-  await this.page.getByRole('combobox', { name: 'CS Region' }).click();
-  await this.page.getByLabel('Far East').getByText('Far East').click();
-  await this.page.getByRole('button', { name: 'Edit' }).first().click();
-  await this.page.getByRole('textbox').fill('test@gmail.com');
-  await this.page.getByRole('button', { name: 'Update' }).click();
-  await this.page.getByRole('button', { name: 'Edit' }).nth(1).click();
-  await this.page.getByRole('textbox').click();
-  await this.page.getByRole('textbox').fill('test@gmail.com');
-  await this.page.getByRole('button', { name: 'Update' }).click();
-  await this.page.getByRole('button', { name: 'Edit' }).nth(2).click();
-  await this.page.getByRole('textbox').click();
-  await this.page.getByRole('textbox').fill('test@gmail.com');
-  await this.page.getByRole('button', { name: 'Update' }).click();
-  await this.page.getByRole('button', { name: 'Create' }).click();
+this.btnsubsidary = page.getByRole('button', { name: 'Subsidiary' });
+this.AddSubsidary = page.getByRole('button', { name: 'Add New Subsidiary' });
+this.branch = page.getByRole('textbox', { name: 'Branch Name *' });
+this.subsidaryemail = page.getByRole('textbox', { name: 'Email *' });
+this.subtelephoneno = page.getByRole('textbox', { name: 'Telephone No. *' });
+this.Businessadd = page.getByRole('textbox', { name: 'Business Address *' });
+
+
+    await  this.page.btnsubsidary.click();
+    await this.page.AddSubsidary.click();
+    await this.page.branch.click();
+    await this.page.branch.fill('test');
+    await this.page.getByRole('combobox', { name: 'Country *' }).click();
+    await this.page.getByRole('option', { name: 'Afghanistan' }).click();
+    await this.page.subsidaryemail.fill('test@gmail.com');
+    await this.page.subtelephoneno.fill('45654645645');
+    await this.page.Businessadd.fill('test');
+    await this.page.getByRole('combobox', { name: 'Business Development Manager *' }).click();
+    await this.page.getByLabel('Alex Robinson').getByText('Alex Robinson').click();
+    await this.page.getByRole('combobox', { name: 'Client Service Manager *' }).click();
+    await this.page.getByRole('option', { name: 'Admin SA' }).click();
+    await this.page.getByRole('combobox', { name: 'CS Region' }).click();
+    await this.page.getByLabel('Far East').getByText('Far East').click();
+    await this.page.getByRole('button', { name: 'Edit' }).first().click();
+    await this.page.getByRole('textbox').fill('test@gmail.com');
+    await this.page.getByRole('button', { name: 'Update' }).click();
+    await this.page.getByRole('button', { name: 'Edit' }).nth(1).click();
+    await this.page.getByRole('textbox').click();
+    await this.page.getByRole('textbox').fill('test@gmail.com');
+    await this.page.getByRole('button', { name: 'Update' }).click();
+    await this.page.getByRole('button', { name: 'Edit' }).nth(2).click();
+    await this.page.getByRole('textbox').click();
+    await this.page.getByRole('textbox').fill('test@gmail.com');
+    await this.page.getByRole('button', { name: 'Update' }).click();
+    await this.page.getByRole('button', { name: 'Create' }).click();
 
         }
         async ExpectedBusiness()
         {
-              await  this.page.getByRole('button', { name: 'Expected Business' }).click();
-            await this.page.getByRole('button', { name: 'Add New' }).click();
+            await  this.page.tabExpectedBusiness.click();
+            await this.page.addnewExpectedBusiness.click();
             await this.page.getByRole('combobox', { name: 'Subsidiary' }).click();
             await this.page.locator('[role="option"]').first().click();
-           await this.page.fill('input[name="amount"]', '100');
-
-           await this.page.getByRole('button', { name: 'Create' }).click();
+            await this.page.fill('input[name="amount"]', '100');
+            await this.page.createExpectedBusiness.click();
         }
         async Documents()
         {
-
-       
+      
                 await  this.tabdocument.click();
                 await this.page.pause();
-                for (let i = 0; i < 5; i++)
+                for (let i = 0; i < 6; i++)
                 {
                     if (i==0)
                             {
@@ -269,33 +262,6 @@ if (isDisabled == false)
                             }
                     
                 }
-               /* await this.page.getByRole('button', { name: 'Upload' }).first().click();
-                await this.page.getByRole('button', { name: 'Choose File' }).setInputFiles('tests/files/Payment.pdf');
-                await this.page.getByRole('button', { name: 'Upload' }).click();
-
-                await this.page.getByRole('button', { name: 'Upload' }).nth(1).click();
-                await this.page.getByRole('button', { name: 'Choose File' }).setInputFiles('tests/files/Payment.pdf');
-                await this.page.getByRole('button', { name: 'Upload' }).click();
-
-                await this.page.getByRole('button', { name: 'Upload' }).nth(2).click();
-                await this.page.getByRole('button', { name: 'Choose File' }).setInputFiles('tests/files/Payment.pdf');
-                await this.page.getByRole('button', { name: 'Upload' }).click();
-
-                await this.page.getByRole('button', { name: 'Upload' }).nth(3).click();
-                await this.page.getByRole('button', { name: 'Choose File' }).setInputFiles('tests/files/Payment.pdf');
-                await this.page.getByRole('button', { name: 'Upload' }).click();
-
-                await this.page.getByRole('button', { name: 'Upload' }).nth(4).click();
-                await this.page.getByRole('button', { name: 'Choose File' }).setInputFiles('tests/files/Payment.pdf');
-                await this.page.getByRole('button', { name: 'Upload' }).click();
-
-                await this.page.getByRole('button', { name: 'Upload' }).nth(5).click();
-                await this.page.getByRole('button', { name: 'Choose File' }).setInputFiles('tests/files/Payment.pdf');
-                await this.page.getByRole('button', { name: 'Upload' }).click();
-
-                await this.page.getByRole('button', { name: 'Upload' }).nth(6).click();
-                await this.page.getByRole('button', { name: 'Choose File' }).setInputFiles('tests/files/Payment.pdf');
-                await this.page.getByRole('button', { name: 'Upload' }).click();*/
                 this.page.on('dialog', async dialog => {
                 expect(dialog.message()).toBe('Success! Document has been saved.');
                 await dialog.accept();

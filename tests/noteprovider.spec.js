@@ -16,7 +16,10 @@ test('Login Functionality', async ({ page }) => {
 
       const menus = new Menus(page);
       await menus.loginmenu( 'Structured Products', 'Note Provider');
-      await page.pause(2000);
+      
+await page.pause(2000);
+     
+
 
 await page.getByRole('button', { name: 'Create' }).click();
 const noteprovid = new Noteprovider(page);

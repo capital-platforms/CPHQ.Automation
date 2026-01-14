@@ -3,7 +3,7 @@ const { Page } =  require('@playwright/test');
 const { expect } = require('@playwright/test');
 const { faker } = require('@faker-js/faker');
     
-export class Account {
+export class MasterAccount {
         constructor(page) {
           //Veriables coming from npx command
           this.P1 = process.env.P1;
@@ -17,6 +17,9 @@ export class Account {
             this.nextstep =  page.getByRole('button', { name: 'Next Step' });
             this.consultant = page.getByRole('combobox', { name: 'Consultant *' });
             this.accounttype =page.getByRole('combobox', { name: 'Account Type *' });
+            this.DFM = page.getByRole('switch', { name: 'DFM' });
+            this.DFMProvider =page.getByRole('combobox', { name: 'DFM Provider *' });
+             this.Trustees  = page.getByRole('combobox', { name: 'Trustees *' });
             this.singlejoint =page.getByRole('combobox', { name: 'Single or Joint *' });
             this.Iscorporateacc =page.getByRole('switch', { name: 'Corporate Account?' });
             this.instantorterm =page.getByRole('combobox', { name: 'Instant Access or Term Account *' });
@@ -80,7 +83,7 @@ export class Account {
           }
  
 async createaccount() {
-    
+    await this.page.pause(2000);
 const values = ['AAL - ASSURED ALLIANCE', 'ABB - ABBEY INTERNATIONAL SOLUTIONS INC','ABD - ABD WORLD GROUP'
     , 'ACH - ACHIEVE CAPITAL','ACS - ALBION CAPITAL STRATEGIES','AFG - ATLAS FINANCIAL GROUP', 
     'AMA - AUSTEN MORRIS ASSOCIATES', 'AME - AUSTEN MORRIS ASSOCIATES EUROPE','CPS - CAPITAL PLATFORMS', 'GCF - GLOBAL CHOICE FINANCIAL GROUP'
@@ -102,9 +105,10 @@ const values = ['AAL - ASSURED ALLIANCE', 'ABB - ABBEY INTERNATIONAL SOLUTIONS I
 
       await this.accounttype.click();
      // await this.page.locator('[role="option"]').first().click();
-     await this.page.locator('[role="option"]', { hasText: 'Stand-alone Account' }).click();
-      await this.singlejoint.click();
-      await this.page.getByRole('option', { name: this.P1, exact: true,}).click();
+     await this.page.locator('[role="option"]', { hasText: 'Master Account' }).click();
+  await this.Trustees.click();
+       await this.page.locator('[role="option"]').first().click();
+              
       await this.instantorterm.click();
       await this.page.getByRole('option', { name: this.P2, exact: true,}).click();
       if (this.P2 == "Term account")
@@ -112,8 +116,11 @@ const values = ['AAL - ASSURED ALLIANCE', 'ABB - ABBEY INTERNATIONAL SOLUTIONS I
       //await this.termyears.fill('5')
       await this.page.getByRole('spinbutton', { name: 'Term of Contract (Year)' }).fill('5');
       }
+      
       await this.classicorflex.click();
       await this.page.getByRole('option', { name: this.P3, exact: true,}).click();
+
+      
       await this.nextstep.click();
    
 
@@ -273,7 +280,7 @@ async Documents()
 
      
 }
-    module.exports = { Account };
+    module.exports = { MasterAccount };
 
 
 

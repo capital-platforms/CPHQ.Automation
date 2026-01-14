@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 const { faker } = require('@faker-js/faker');
-import { Note } from '../pages/note.js';
+import { CloseNote } from '../pages/closenote.js';
 import { LoginPage } from '../pages/login.js';
 import { Menus } from '../pages/menu.js';
 import { Bond } from '../pages/bond.js';
@@ -14,12 +14,12 @@ test('Login Functionality', async ({ page }) => {
 
 
       const menus = new Menus(page);
-      await menus.loginmenu( 'Structured Products', 'create note');
+      await menus.loginmenu( 'Structured Products', 'Create Note');
 
 
       // currect note =1, close note =2, missing note =3
-      const note = new Note(page);
-      const NOTE =  await note.createnote(2);
+      const note = new CloseNote (page);
+      const NOTE =  await note.createnote(1);
        
 
       await  note.uploadfiles('Fact Sheet *')

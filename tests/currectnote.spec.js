@@ -3,7 +3,7 @@ const { test, expect } = require('@playwright/test');
 const { faker } = require('@faker-js/faker');
 
 import { Bond } from '../pages/bond.js';
-import { Note } from '../pages/note.js';
+import { CurrentNote } from '../pages/currentnote.js';
 import { LoginPage } from '../pages/login.js';
 import { Menus } from '../pages/menu.js';
 
@@ -19,7 +19,7 @@ test('Login Functionality', async ({ page }) => {
       await page.pause(2000)
 //click on create note button
             await page.getByRole('button', { name: 'Create' }).click();
-            const note = new Note(page);
+            const note = new CurrentNote(page);
             const ISIN = await note.createnote(1);
             await  note.uploadfiles('Fact Sheet *')
             await  note.uploadfiles('Term Sheet *')
@@ -35,7 +35,7 @@ test('Login Functionality', async ({ page }) => {
             await page.getByRole('button', { name: 'Open menu' }).click(); 
             await page.getByRole('menuitem', { name: 'Edit' }).click();
             let NOTE ='';
-            NOTE = await note.createnote(1);
+            NOTE = await note.createnote(2);
             const updateBtn = page.getByRole('button', { name: 'Update Note', exact: true });
             await expect(updateBtn).toBeVisible();
             await expect(updateBtn).toBeEnabled();
@@ -64,5 +64,6 @@ test('Login Functionality', async ({ page }) => {
           await page.getByRole('button', { name: 'Open menu' }).click(); 
           await page.getByRole('menuitem', { name: 'Delete' }).click();
           await page.getByRole('button', { name: 'Delete' }).click();
+          await page.pause();
 
 })

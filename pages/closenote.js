@@ -2,7 +2,7 @@
 const { expect } = require('@playwright/test');
 
 const { faker } = require('@faker-js/faker');
-    export class Note {
+    export class CloseNote {
         constructor(page) {
             this.page = page;
 
@@ -13,7 +13,7 @@ const { faker } = require('@faker-js/faker');
 async createnote (Notetype)
 {
   // 
-
+ await this.page.pause(2000);
 const values = ['Adidas AG', '^RUT','3M', 'Adidas AG','Amedisys Inc','Banco Santander S.A.', 'Brent Crude Oil Futures', 'Coinbase Global Inc','HP Inc', 'Adobe', 'Alcoa Corp','ALL ORD', 'American Express Co,', 'HEIDELBERGCEMENT AG O.N.' ];
 const Currency = ['USD', 'GBP','EUR', 'JPY', 'SGD', 'CAD', 'AUD']
 const Frequency = ['Monthly', 'Quarterly', 'Bi-Annually', 'Annually', 'On Maturity']
@@ -96,44 +96,51 @@ await  this.page.getByRole('option', { name: NewrandomValue }).click();
   await  this.page.getByRole('button', { name: 'Strike Date *' }).click();
 
 
+
+// await this.page.pause(2000)
+await this.page.getByRole('button', { name: 'Strike Date *' }).click();
+await this.page.getByRole('combobox').filter({ hasText: '2026' }).first().click();
+const yearOption = this.page.getByRole('option', { name: '2026' });
+await expect(yearOption).toBeVisible();
+await yearOption.click();
+await this.page.locator('button').filter({ hasText: 'January' }).click();
+const MonthOption = this.page.getByRole('option', { name: 'January'  });
+await expect(MonthOption).toBeVisible();
+await MonthOption.click();
+
 if ( Notetype == 1)
 {
-
-await this.page.getByRole('button', { name: 'Strike Date *' }).click();
-await this.page.getByRole('combobox').filter({ hasText: currectyear }).first().click();
-const yearOption = this.page.getByRole('option', { name: newyear });
-await expect(yearOption).toBeVisible();
-await yearOption.click();
-await this.page.locator('button').filter({ hasText: currentMonth }).click();
-const MonthOption = this.page.getByRole('option', { name: nextMonth });
-await expect(MonthOption).toBeVisible();
-await MonthOption.click();
-await  this.page.getByRole('gridcell', { name: day }).first().click({ force: true });
+await  this.page.getByRole('gridcell', { name: '10' }).first().click({ force: true });
 }
-else if ( Notetype == 2)
-{
-
-await this.page.getByRole('button', { name: 'Strike Date *' }).click();
-await this.page.getByRole('combobox').filter({ hasText: currectyear }).first().click();
-const yearOption = this.page.getByRole('option', { name: currectyear });
-await expect(yearOption).toBeVisible();
-await yearOption.click();
-await this.page.locator('button').filter({ hasText: currentMonth }).click();
-const MonthOption = this.page.getByRole('option', { name: currentMonth });
-await expect(MonthOption).toBeVisible();
-await MonthOption.click();
-await  this.page.getByRole('gridcell', { name: pastday }).first().click({ force: true });
+else{
+    await  this.page.getByRole('gridcell', { name: '10' }).first().click({ force: true });
 }
+
+
+
 
 
 
 
 await this.page.getByRole('button', { name: 'Maturity Date *' }).click();
-await this.page.locator('button').filter({ hasText: currectyear }).last().click();
-await this.page.getByRole('option', { name: newyear }).click();
-await this.page.locator('button').filter({ hasText: currentMonth }).click();
-await  this.page.getByRole('option', { name: nextMonth }).click();
-await  this.page.getByRole('gridcell', { name: day }).click();
+await this.page.locator('button').filter({ hasText: '2026' }).last().click();
+await this.page.getByRole('option', { name: '2026' }).click();
+await this.page.locator('button').filter({ hasText: 'January' }).click();
+await  this.page.getByRole('option', { name: 'January' }).click();
+
+
+
+if ( Notetype == 1)
+{
+await  this.page.getByRole('gridcell', { name: '10' }).click();
+}
+else{
+    await  this.page.getByRole('gridcell', { name: '11' }).click();
+}
+
+
+
+
 //
 
   await  this.page.getByRole('combobox', { name: 'Denomination *' }).click();
@@ -163,4 +170,4 @@ await  this.page.getByRole('gridcell', { name: day }).click();
    
         }
 
-      module.exports = { Note };
+      module.exports = { CloseNote };
